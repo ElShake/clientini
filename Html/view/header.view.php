@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start();
+define("SITE_ROOT", "C:/xampp/htdocs/clientini/Html");
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,27 +13,12 @@
 
 <body>
   <header>
-  <?php ?>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark form-inline my-0 my-lg-0" class="">
-      <a class="navbar-brand" href="index.php">HOME</a>
+  <?php require "stylesheet.php" ?>
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary form-inline my-0 my-lg-0" class="">
+      <a class="navbar-brand btn btn-info" href="client.view.php">CLIENTI</a>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="clients.php">CLIENTS</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="society.php">SOCIETY</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            INVOICES
-          </a>
-          <div class="dropdown-menu bg-secondary" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item " href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
+
       </ul>
       <ul class="navbar-nav ">
         <?php
@@ -46,15 +33,13 @@
             <li class="nav-item">
                 <input type="text" class="form-control" name="email" placeholder="email@holder.ph">
             </li>
-            <li><div>"   "</div></li>
             <li class="nav-item">    
-                <input type="text" class="form-control" name="password" placeholder="Password">
-            </li>  
-              <button  type="submit" name="login-submit" class="form-control nav-link btn-dark" >LOGIN</button>
+                <input type="text" class="form-control ml-2" name="password" placeholder="Password">
             </li>
-            <li class="nav-item btn-outline-success">
-              <a class="nav-link" href="signup.php">SIGNUP</a>
-            </li>';
+            <li>
+              <button  type="submit" name="login-submit" class="form-control nav-link btn btn-info text-white ml-2" >LOGIN</button>
+            </li>
+            ';
         }
         ?>
 
