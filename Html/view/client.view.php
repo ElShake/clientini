@@ -15,21 +15,38 @@
 </head>
 
 <body>
-
   <?php
+  
   require "header.view.php";
+  // azzera la sessione per dimenticare la directory
+  $idnow=$_SESSION['UserId'];
   session_unset();
+  $_SESSION['UserId']=$idnow;
+  
+  if (isset($_SESSION['UserId'])) {
+    
+  
   ?>
+  
   <!-- mostra tutti i clienti -->
   <?php require(SITE_ROOT . '/includes/client.inc.php'); ?>
   <div class="split left">
-    <div class="centered">
+    
+    <div class="centered" id="clienti">
+      
+<h2 class="ml-3 text-light">CLIENTI</h2>
       <?php
+      // dare un valore a caso ad alfabeto
+      $alfabeto="barcaiolo";
       while ($row = $result->fetch()) : ?>
-        <button class="btn btn-primary" value="<?php echo $row["RagSoc"]; ?>" onClick="inform(this.value)"><?php echo $row["RagSoc"]; ?> </button>
-
+        <div class="ml-2">
+        <?php $rubri=substr($row["RagSoc"],0,1);
+        if (($rubri)!=($alfabeto)){?><h3 class="text-success"><?php echo ($rubri)?></h3> <?php $alfabeto=$rubri;}
+        ?>
+        <button class="text-light btn-sm btn" value="<?php echo $row["RagSoc"]; ?>" onClick="inform(this.value)"><?php echo $row["RagSoc"]; ?> </button>
+        <br></div>
       <?php endwhile; ?>
-
+<br><br>
     </div>
   </div>
   <!-- mostra la pergamena del cliente -->
@@ -93,4 +110,8 @@
     }
   }
 </script>
+<?php require "footer.view.php";
+} else {
+ ?><p>Please login</p><?php
+} ?>
 </body>

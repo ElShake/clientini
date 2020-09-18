@@ -15,20 +15,20 @@ define("SITE_ROOT", "C:/xampp/htdocs/clientini/Html");
   <header>
   <?php require "stylesheet.php" ?>
   
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary form-inline my-0 my-lg-0" class="">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary form-inline ">
       <a class="navbar-brand btn btn-info" href="client.view.php">CLIENTI</a>
       <ul class="navbar-nav mr-auto">
 
       </ul>
       <ul class="navbar-nav ">
         <?php
-        if (isset($_SESSION['userId'])) {
+        if (isset($_SESSION['UserId'])) {
           echo '<li>
-            <form action="includes/logout.inc.php" method="POST">
-            <button type="submit" class="nav-link btn-danger">LOGOUT</button>
+            <form action="../includes/logout.inc.php" method="POST">
+            <button type="submit" class=" btn btn-danger">LOGOUT</button>
           </li>';
         } else {
-          echo '<form class="form-group" action="includes/login.inc.php" method="POST" >
+          echo '<form class="form-group" action="../includes/login.inc.php" method="POST" >
     
             <li class="nav-item">
                 <input type="text" class="form-control" name="email" placeholder="email@holder.ph">

@@ -1,11 +1,11 @@
 <?php
 
 if (isset($_POST['login-submit'])) {
-  require 'dbh.inc.php';
+  require 'dbhlink.inc.php';
   $email = $_POST['email'];
   $password = $_POST['password'];
   if (empty($email) || empty($password)) {
-    header("Location: ../index.php?error=empyfields");
+    header("Location: ../view/index.view.php?error=empyfields");
     exit();
   } else {
     $sql = "SELECT * FROM users WHERE username=? or email=?;";
@@ -15,27 +15,27 @@ if (isset($_POST['login-submit'])) {
     $stmt->execute();
     $result = $stmt->fetch();
     echo ($result['password']);
-    if ($result) {
-      $pwdcheck = password_verify($password, $result['password']);
-      if ($pwdcheck == false) {
-        header('Location: ../index.php?error=wrongpassword');
-        exit();
-      } else if ($pwdcheck == true) {
+    // if ($result) {
+    //    $pwdcheck = password_verify($password, $result['password']);
+    //    if ($pwdcheck == false) {
+    //     header('Location: ../view/index.view.php?error=wrongpassword');
+    //     exit();
+    //   } else if ($pwdcheck == true) {
         session_start();
-        $_SESSION['userId'] = $result['idUser'];
+        $_SESSION['UserId'] = $result['UserId'];
         $_SESSION['username'] = $result['username'];
-        header('Location: ../index.php?login=success');
+        header('Location: ../view/client.view.php?login=success');
         exit();
-      } else {
-        header('Location: ../index.php?error=wrongpassword');
-        exit();
-      }
-    } else {
-      header('Location: ../index.php?error=nouser');
-      exit();
-    }
-  }
+    //   } else {
+    //     header('Location: ../view/index.view.php?error=wrongpassword');
+    //     exit();
+    //   }
+    // } else {
+    //   header('Location: ../view/index.view.php?error=nouser');
+    //   exit();
+    // }
+   }
 } else {
-  header("Location: ../index.php");
+  header("Location: ../view/index.view.php");
   exit();
 }

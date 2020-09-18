@@ -1,7 +1,7 @@
 <style>.split {
-  height: 100%;
+  height: 91%;
   width: 50%;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   top: 1;
   overflow-x: hidden;
@@ -12,6 +12,13 @@
   background-color: #111;
 }
 
+.navbar{
+  position: sticky;
+  top:0px;
+}
+.hidden{
+  display:none;
+}
 /* Control the right side */
 .right {
   right: 0;

@@ -4,10 +4,10 @@ require "header.view.php";
 
 <main>
     <?php
-    if (isset($_SESSION['userId'])) {
-      require "client.php";
+    if (isset($_SESSION['UserId'])) {
+      require "client.view.php";
     } else {
-        echo '<p class"login-status">You are not logged!</p>';
+        echo '<p class"login-status">Please login!</p>';
     }
     ?>
 </main>
