@@ -3,53 +3,48 @@
 
 <head>
   <title>Home</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="dist/css/tabulator.min.css" rel="stylesheet">
-  <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
 
 </head>
 
 <body>
   <?php
-
   require "header.view.php";
-
   ?>
   <div class="container">
   <div class="row justify-content-center">
-    <form>
+    <form method="GET">
       <h1>Fatture Ricorrenti</h1>
-      <td>
-        <label>Anno: </label>
-        <select class="btn" name="anno">
-          <?php for ($i = 2016; $i <= (date("Y") + 2); $i++) { ?>
-            <option value="<?php echo ($i) ?>"><?php echo ($i) ?></option>
+        <div class="form-group">
+        <label for="anno">Anno: </label>
+        <select class="btn"  name="anno">
+          <?php for ($a = 2016; $a <= (date("Y") + 2); $a++) { ?>
+            <option value="<?php echo ($a) ?>"><?php echo ($a) ?></option>
           <?php } ?>
         </select>
-      </td>
-      <td>
+        </div>
+        <div class="form-group">
         <label>Mese: </label>
         <select class="btn" name="mese">
           <?php for ($i = 1; $i <= (12); $i++) { ?>
             <option value="<?php echo ($i) ?>"><?php echo date("F", mktime(0, 0, 0, $i, 10)); ?></option>
           <?php } ?>
         </select>
-      </td>
-      <td><button class="btn btn-primary" onclick="cerca(anno,mese)">Cerca</button></td>
+        </div>
+        <div class="form-group">
+     <button class="btn btn-primary"  onclick="cerca(value.anno,value.mese)">Cerca</button>
+     </div>
+     <div id="ricerca">A</div>
     </form>
-    <div id="ricerca"></div>
+    
   </div>
  
   </div>
 
 
-  <!-- funzione per passare il cliente cliccato alla pergamena  -->
-  <script type="text/javascript">
+  
+</body>
+<!-- funzione per passare il cliente cliccato alla pergamena  -->
+<script type="text/javascript">
     function getXMLHTTP() {
       var x = false;
       try {
@@ -87,7 +82,4 @@
       }
     }
   </script>
-  <?php require "footer.view.php";
-
-  ?>
-</body>
+ 
