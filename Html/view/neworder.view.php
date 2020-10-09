@@ -1,117 +1,86 @@
-<!doctype html>
-<html lang="en">
+<html>
 
 <head>
-  <title>Clients</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link href="dist/css/tabulator.min.css" rel="stylesheet">
-  <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
 
 </head>
 
 <body>
-  <?php
-  
-  require "header.view.php";
-  // azzera la sessione per dimenticare la directory
-  $idnow=$_SESSION['UserId'];
-  session_unset();
-  $_SESSION['UserId']=$idnow;
-  
-  if (isset($_SESSION['UserId'])) {
-    
-  
-  ?>
-  
-  <!-- mostra tutti i clienti -->
-  <?php require(SITE_ROOT . '/includes/client.inc.php'); ?>
-  <div class="split left">
-    
-    <div class="centered" id="clienti">
-      
-<h2 class="ml-3 text-light">CLIENTI</h2>
-      <?php
-      // dare un valore a caso ad alfabeto
-      $alfabeto="barcaiolo";
-      while ($row = $result->fetch()) : ?>
-        <div class="ml-2">
-        <?php $rubri=substr($row["RagSoc"],0,1);
-        if (($rubri)!=($alfabeto)){?><h3 class="text-success"><?php echo ($rubri)?></h3> <?php $alfabeto=$rubri;}
-        ?>
-        <button class="text-light btn-sm btn" value="<?php echo $row["RagSoc"]; ?>" onClick="inform(this.value)"><?php echo $row["RagSoc"]; ?> </button>
-        <br></div>
-      <?php endwhile; ?>
-<br><br>
+  <?php require "header.view.php"; ?>
+  <div class="container">
+    <div class="row justify-content-center">
+      <form action="newinvoice.view.php" method="POST">
+        <h1>Nuovo Ordine</h1>
+        <div class="form-group">
+          <label for="numeroOrdine">Numero Ordine: </label>
+          <input name="numeroOrdine" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Cliente: </label>
+          <select class="btn" name="cliente">
+            <option></option>
+            <?php foreach ($clients as $cliente) { ?>
+              <option value="<?php echo ($cliente["ragSoc"]) ?>"><?php echo ($cliente["ragSoc"]); ?></option>
+            <?php } ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="dataRegistrazione">Data Registrazione: </label>
+          <input id="dataRegistrazione" width="276" />
+          <script>
+            $('#dataRegistrazione').datepicker({
+              uiLibrary: 'bootstrap4'
+            });
+          </script>
+        </div>
+        <div class="form-group">
+          <label for="dataEstinzione">Data Estinzione: </label>
+          <input id="dataEstinzione" width="276" />
+          <script>
+            $('#dataEstinzione').datepicker({
+              uiLibrary: 'bootstrap4'
+            });
+          </script>
+        </div>
+        <div class="form-group">
+          <label for="numeroFatture">Numero Fatture: </label>
+          <select class="btn" name="anno">
+            <?php for ($a = 2; $a <= (30); $a++) { ?>
+              <option value="<?php echo ($a) ?>"><?php echo ($a) ?></option>
+            <?php } ?>
+          </select>
+        </div>
+        <div class="form-group">
+          Ricorsività fissa: <input type="checkbox" id="chericor" onclick="checkricor()">
+          <div id="ricor" style="display:none" class="form-group">
+            <label for="ricorsivita">Ricorsività: </label>
+            <select class="btn" name="anno">
+              <?php for ($a = 1; $a<=12; $a++) { ?>
+                <option value="<?php echo ($a) ?>"><?php echo ($a) ?></option>
+              <?php } ?>
+            </select>
+            <label> Mesi </label>
+          </div>
+          Importo fisso: <input type="checkbox" name="importoFisso">
+        </div>
+        <button class="btn btn-primary" type="submit">Fatture</button>
     </div>
-  </div>
-  <!-- mostra la pergamena del cliente -->
-  <div class="split right">
-    <div id="infodiv">
-      
-    </div>
-  </div>
+    </form>
+</body>
 
+</html>
 
+<script>
+  function checkricor() {
+    // Get the checkbox
+    var checkBox = document.getElementById("chericor");
+    // Get the output text
+    var text = document.getElementById("ricor");
 
-
-
-
-  </div>
-  <!-- <?php
-        if (!isset($_SESSION['userId'])) {
-          echo '<p class"login-status">Please login!</p>';
-        } else {
-
-        ?> -->
-<?php } ?>
-</div>
-
-<!-- funzione per passare il cliente cliccato alla pergamena  -->
-<script type="text/javascript">
-  function getXMLHTTP() {
-    var x = false;
-    try {
-      x = new XMLHttpRequest();
-    } catch (e) {
-      try {
-        x = new ActiveXObject("Microsoft.XMLHTTP");
-      } catch (ex) {
-        try {
-          req = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e1) {
-          x = false;
-        }
-      }
-    }
-    return x;
-  }
-
-  function inform(RagSoc) {
-    var strURL = "../tabs/info.tab.php?RagSoc=" + RagSoc;
-    var req = getXMLHTTP();
-    if (req) {
-      req.onreadystatechange = function() {
-        if (req.readyState == 4) {
-          // only if "OK"
-          if (req.status == 200) {
-            document.getElementById('infodiv').innerHTML = req.responseText;
-          } else {
-            alert("Problem while using XMLHTTP:\n" + req.statusText);
-          }
-        }
-      }
-      req.open("GET", strURL, true);
-      req.send(null);
+    // If the checkbox is checked, display the output text
+    if (checkBox.checked == true) {
+      text.style.display = "block";
+    } else {
+      text.style.display = "none";
     }
   }
 </script>
-<?php require "footer.view.php";
-} else {
- ?><p>Please login</p><?php
-} ?>
-</body>
